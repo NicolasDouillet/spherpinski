@@ -2,7 +2,7 @@ function [V, T] = Spherpinski(nb_it, option_fill, option_display)
 %% Spherpinski : function to compute and display the Sierpinski
 % sphere at any iteration number / depth level.
 %
-% Author & support : nicolas.douillet (at) free.fr, 2019-2020.
+% Author : nicolas.douillet9 (at) gmail.com, 2017-2024.
 %
 %
 % Syntax
@@ -66,7 +66,7 @@ function [V, T] = Spherpinski(nb_it, option_fill, option_display)
 % [V,T] = Spherpinski(7,'double',true);
 
 
-%% Inputs parsing
+%% Input parsing
 assert(nargin < 4,'Too many input arguments.');
 
 if ~nargin
@@ -202,6 +202,10 @@ V = cat(1,V,RxV);
 % Remove duplicated vertices
 [V,T] = remove_duplicated_vertices(V,T);
 
+% % Ellipsoid option
+% V(:,2) = 0.25*(1+sqrt(5))^2*V(:,2);
+% V(:,1) = 0.5*(1+sqrt(5))*V(:,1);
+
 % Remove duplicated triangles
 T = unique(sort(T,2),'rows','stable');
 
@@ -291,7 +295,7 @@ while p <= nbstep^2 && row_length > 1
             
             T(row_idx,:) = [i i+1 i+row_length];
             row_idx = row_idx + 1;            
-            T(row_idx,:) = [i i+1 i-row_length]; % + upside-down triangles serie
+            T(row_idx,:) = [i i-row_length i+1]; % + upside-down triangles serie
             row_idx = row_idx + 1;            
             i = i +1;
             
